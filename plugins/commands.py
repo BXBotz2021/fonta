@@ -6,7 +6,7 @@ from config import Config
 from .fonts import Fonts
 
 # Replace with your channel's username (without '@')
-CHANNEL_USERNAME = "YourChannelUsername"
+CHANNEL_USERNAME = "moviez_botz"
 
 async def check_force_subscription(client, user_id):
     """
