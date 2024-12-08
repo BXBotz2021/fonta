@@ -6,7 +6,7 @@ from .fonts import Fonts
 from config import Config
 
 # Set your channel ID here (use the numeric ID)
-AUTH_CHANNEL_ID = -1002437864651  # Channel ID (use the full numeric ID, not the username)
+AUTH_CHANNEL_ID = "-1002437864651" # Channel ID (use the full numeric ID, not the username)
 AUTH_CHANNEL_USERNAME = "moviez_botz"  # Channel username for the button
 
 async def check_force_subscription(client, user_id):
