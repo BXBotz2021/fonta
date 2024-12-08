@@ -24,26 +24,6 @@ async def fsub(client, user_id):
 
 @Client.on_message(filters.command('start'))
 async def start(c, m):
-    if not await fsub(c, m.from_user.id):
-        try:
-            invite_link = await c.create_chat_invite_link(int(Config.AUTH_CHANNEL))
-        except ChatAdminRequired:
-            logger.error("Make sure the bot is an admin in the AUTH_CHANNEL.")
-            return
-
-        btn = [
-            [
-                InlineKeyboardButton("🤖 Join Updates Channel", url=invite_link.invite_link)
-            ]
-        ]
-        await c.send_message(
-            chat_id=m.from_user.id,
-            text="**Please Join My Updates Channel to use this Bot!**",
-            reply_markup=InlineKeyboardMarkup(btn),
-            parse_mode=enums.ParseMode.MARKDOWN
-        )
-        return
-
     owner = await c.get_users(int(Config.OWNER_ID))
     owner_username = owner.username if owner.username else 'Movies_Botz'
 
@@ -56,8 +36,6 @@ __I Can Help You To Get Stylish Fonts. Just Send Me Some Text And See The Magic�
 
 **Mα∂є Wιтн ❤️‍🔥 ву @Movies_Botz**
 """
-
-
     # Buttons
     buttons = [
         [
@@ -71,12 +49,20 @@ __I Can Help You To Get Stylish Fonts. Just Send Me Some Text And See The Magic�
     )
 
 
-
 @Client.on_message(filters.private & filters.incoming & filters.text)
 async def style_buttons(c, m, cb=False):
     if not await fsub(c, m.from_user.id):
-        await m.reply_text("Please join the channel to use this bot.")
+        btn = [
+            [
+                InlineKeyboardButton("🤖 Join Updates Channel", url=await c.create_chat_invite_link(int(Config.AUTH_CHANNEL)).invite_link)
+            ],
+            [
+                InlineKeyboardButton("Try Again", callback_data='try_again')
+            ]
+        ]
+        await m.reply_text("Please join the channel to use this bot.", reply_markup=InlineKeyboardMarkup(btn))
         return
+        
         
     buttons = [[
         InlineKeyboardButton('𝚃𝚢𝚙𝚎𝚠𝚛𝚒𝚝𝚎𝚛', callback_data='style+typewriter'),
