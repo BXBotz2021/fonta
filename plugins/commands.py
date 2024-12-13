@@ -1,27 +1,35 @@
 import os
-from pyrogram import Client, filters
+from pyrogram import Client, filters, enums
 from pyrogram.errors import UserNotParticipant
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-from .fonts import Fonts
 from config import Config
 
+temp = {"REQUESTERS": {}}
+
 # Set your channel ID here (use the numeric ID)
-AUTH_CHANNEL_ID = "-1002437864651" # Channel ID (use the full numeric ID, not the username)
+AUTH_CHANNEL = "-1002437864651"  # Channel ID (use the full numeric ID, not the username)
 AUTH_CHANNEL_USERNAME = "moviez_botz"  # Channel username for the button
 
-async def check_force_subscription(client, user_id):
-    """
-    Function to check if a user has joined the required channel by ID.
-    Returns True if the user is a member or owner, otherwise False.
-    """
+async def __(bot, chat_id):
+    """ Helper function to prepare temporary user lists for manual checking. """
+    if chat_id not in temp.REQUESTERS:
+        temp.REQUESTERS[chat_id] = {"list": []}
+
+async def is_subscribed(bot, query):
     try:
-        user = await client.get_chat_member(AUTH_CHANNEL_ID, user_id)
-        if user.status in ["member", "administrator", "creator"]:
-            return True
+        user = await bot.get_chat_member(AUTH_CHANNEL, query.from_user.id)
     except UserNotParticipant:
-        return False
-    except Exception:
-        return False
+        await __(bot, AUTH_CHANNEL)
+        return query.from_user.id in temp.REQUESTERS.get(AUTH_CHANNEL, {}).get(
+            "list", []
+        )
+
+    except Exception as e:
+        print(f"Error: {e}")
+    else:
+        if user.status != enums.ChatMemberStatus.BANNED:
+            return True
+
     return False
 
 @Client.on_message(filters.command('start'))
@@ -30,7 +38,7 @@ async def start(c, m):
 
     # If the user is not the bot owner, check if they have joined the channel
     if m.from_user.id != owner_id:
-        if not await check_force_subscription(c, m.from_user.id):
+        if not await is_subscribed(c, m):
             # If the user is not a member, send a message with a "Try Again" button
             buttons = [
                 [InlineKeyboardButton("Join Channel", url=f"https://t.me/{AUTH_CHANNEL_USERNAME}")],
@@ -69,7 +77,7 @@ async def handle_other_messages(c, m):
     owner_id = int(Config.OWNER_ID)
 
     if m.from_user.id != owner_id:
-        if not await check_force_subscription(c, m.from_user.id):
+        if not await is_subscribed(c, m):
             await m.reply_text(
                 text=f"❌ You must join our channel to use this bot:\n\n👉 [Join Channel](https://t.me/{AUTH_CHANNEL_USERNAME})",
                 reply_markup=InlineKeyboardMarkup(
@@ -123,7 +131,7 @@ async def style_buttons(c, m, cb=False):
 @Client.on_callback_query(filters.regex('^try_again'))
 async def try_again(c, m):
     # When the user clicks "Try Again," check if they joined the channel again
-    if not await check_force_subscription(c, m.from_user.id):
+    if not await is_subscribed(c, m):
         await m.answer("❌ You must join the channel first to continue!")
         return
 
