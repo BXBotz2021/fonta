@@ -124,89 +124,55 @@ async def style(c, m):
     await m.answer()
     cmd, style = m.data.split('+')
 
-    if style == 'typewriter':
-        cls = Fonts.typewriter
-    if style == 'outline':
-        cls = Fonts.outline
-    if style == 'serif':
-        cls = Fonts.serief
-    if style == 'bold_cool':
-        cls = Fonts.bold_cool
-    if style == 'cool':
-        cls = Fonts.cool
-    if style == 'small_cap':
-        cls = Fonts.smallcap
-    if style == 'script':
-        cls = Fonts.script
-    if style == 'script_bolt':
-        cls = Fonts.bold_script
-    if style == 'tiny':
-        cls = Fonts.tiny
-    if style == 'comic':
-        cls = Fonts.comic
-    if style == 'sans':
-        cls = Fonts.san
-    if style == 'slant_sans':
-        cls = Fonts.slant_san
-    if style == 'slant':
-        cls = Fonts.slant
-    if style == 'sim':
-        cls = Fonts.sim
-    if style == 'circles':
-        cls = Fonts.circles
-    if style == 'circle_dark':
-        cls = Fonts.dark_circle
-    if style == 'gothic':
-        cls = Fonts.gothic
-    if style == 'gothic_bolt':
-        cls = Fonts.bold_gothic
-    if style == 'cloud':
-        cls = Fonts.cloud
-    if style == 'happy':
-        cls = Fonts.happy
-    if style == 'sad':
-        cls = Fonts.sad
-    if style == 'special':
-        cls = Fonts.special
-    if style == 'squares':
-        cls = Fonts.square
-    if style == 'squares_bold':
-        cls = Fonts.dark_square
-    if style == 'andalucia':
-        cls = Fonts.andalucia
-    if style == 'manga':
-        cls = Fonts.manga
-    if style == 'stinky':
-        cls = Fonts.stinky
-    if style == 'bubbles':
-        cls = Fonts.bubbles
-    if style == 'underline':
-        cls = Fonts.underline
-    if style == 'ladybug':
-        cls = Fonts.ladybug
-    if style == 'rays':
-        cls = Fonts.rays
-    if style == 'birds':
-        cls = Fonts.birds
-    if style == 'slash':
-        cls = Fonts.slash
-    if style == 'stop':
-        cls = Fonts.stop
-    if style == 'skyline':
-        cls = Fonts.skyline
-    if style == 'arrows':
-        cls = Fonts.arrows
-    if style == 'qvnes':
-        cls = Fonts.rvnes
-    if style == 'strike':
-        cls = Fonts.strike
-    if style == 'frozen':
-        cls = Fonts.frozen
-    new_text = cls(m.message.reply_to_message.text)
-    try:
-        await m.message.reply_text(new_text, quote=True, reply_markup=m.message.reply_markup)
-    except:
-        pass
+    font_styles = {
+        'typewriter': Fonts.typewriter,
+        'outline': Fonts.outline,
+        'serif': Fonts.serief,
+        'bold_cool': Fonts.bold_cool,
+        'cool': Fonts.cool,
+        'small_cap': Fonts.smallcap,
+        'script': Fonts.script,
+        'script_bolt': Fonts.bold_script,
+        'tiny': Fonts.tiny,
+        'comic': Fonts.comic,
+        'sans': Fonts.san,
+        'slant_sans': Fonts.slant_san,
+        'slant': Fonts.slant,
+        'sim': Fonts.sim,
+        'circles': Fonts.circles,
+        'circle_dark': Fonts.dark_circle,
+        'gothic': Fonts.gothic,
+        'gothic_bolt': Fonts.bold_gothic,
+        'cloud': Fonts.cloud,
+        'happy': Fonts.happy,
+        'sad': Fonts.sad,
+        'special': Fonts.special,
+        'squares': Fonts.square,
+        'squares_bold': Fonts.dark_square,
+        'andalucia': Fonts.andalucia,
+        'manga': Fonts.manga,
+        'stinky': Fonts.stinky,
+        'bubbles': Fonts.bubbles,
+        'underline': Fonts.underline,
+        'ladybug': Fonts.ladybug,
+        'rays': Fonts.rays,
+        'birds': Fonts.birds,
+        'slash': Fonts.slash,
+        'stop': Fonts.stop,
+        'skyline': Fonts.skyline,
+        'arrows': Fonts.arrows,
+        'qvnes': Fonts.rvnes,
+        'strike': Fonts.strike,
+        'frozen': Fonts.frozen
+    }
+
+    if style in font_styles:
+        new_text = font_styles[style](m.message.reply_to_message.text)
+        try:
+            await m.message.edit_text(new_text)  # Editing without buttons
+        except:
+            pass
+
 
 @Client.on_callback_query(filters.regex('^close'))
 async def close_button(c, m):
