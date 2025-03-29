@@ -38,8 +38,7 @@ async def start(c, m):
     
     owner = await c.get_users(owner_id)
     owner_username = owner.username if owner.username else 'MUFAZTG_NEW'
-    text = f"""**👋 Hello! {m.from_user.mention(style='md')},**\n\n💡 I am a Stylish Font Bot.\n\n__Send me text and see the magic ✨🪄__\n\n**Made with ❤️‍🔥 by @{owner_username}**"""
-    
+    text = f"""👋 <b>Hey there, {m.from_user.mention(style='html')}!</b>\n\n✨ Welcome to <b>Stylish Font Bot</b> – your personal text styler!\n\n🔠 Send me any text, and I'll turn it into <b>cool & unique fonts</b> instantly.\n\n🎨 Try it out now and give your words a stylish touch!\n\n🚀 Made with ❤️ by <b>@{owner_username}</b>"""
     buttons = [[
         InlineKeyboardButton('🔰 𝗖𝗛𝗔𝗡𝗡𝗘𝗟', url=f"https://t.me/{AUTH_CHANNEL_USERNAME}"),
         InlineKeyboardButton('🎛️ 𝗖𝗥𝗘𝗔𝗧𝗢𝗥', url=f"https://t.me/{owner_username}")
@@ -108,7 +107,7 @@ async def style_buttons(c, m, cb=False):
         ],[
         InlineKeyboardButton('ዪሀክቿነ', callback_data='style+qvnes'),
         InlineKeyboardButton('S̶t̶r̶i̶k̶e̶', callback_data='style+strike'),
-        InlineKeyboardButton('F༙r༙o༙z༙e༙n༙', callback_data='style+frozen')
+        InlineKeyboardButton('F༙R༙O༙Z༙E༙N༙', callback_data='style+frozen')
         ],[
         InlineKeyboardButton("❌ 𝗖𝗟𝗢𝗦𝗘 ❌", callback_data="close")
         ]]
@@ -168,10 +167,25 @@ async def style(c, m):
 
     if style in font_styles:
         new_text = font_styles[style](m.message.reply_to_message.text)
+
+        # "Copy Text" and "Back" buttons
+        buttons = [[
+        InlineKeyboardButton("📋 𝗖𝗢𝗣𝗬 𝗧𝗘𝗫𝗧", callback_data=f"copy_text+{new_text}"),
+        InlineKeyboardButton("🔙 𝗖𝗛𝗢𝗢𝗦𝗘 𝗔𝗡𝗢𝗧𝗛𝗘𝗥 𝗙𝗢𝗡𝗧", callback_data="back_to_fonts")]]
         try:
-            await m.message.edit_text(new_text)  # Editing without buttons
+            await m.message.edit_text(new_text, reply_markup=InlineKeyboardMarkup(buttons))
         except:
             pass
+
+@Client.on_callback_query(filters.regex('^copy_text'))
+async def copy_text(c, m):
+    await m.answer("✅ Text copied to clipboard!\n(Just long-press the text to copy it.)", show_alert=True)
+
+@Client.on_callback_query(filters.regex('^back_to_fonts'))
+async def back_to_fonts(c, m):
+    await m.answer()
+    await style_buttons(c, m, cb=True)  # Show the font selection buttons again
+
 
 
 @Client.on_callback_query(filters.regex('^close'))
