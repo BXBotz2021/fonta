@@ -50,8 +50,7 @@ async def start(c, m):
     [
         InlineKeyboardButton('❌ 𝗖𝗟𝗢𝗦𝗘', callback_data="close")
     ]]
-
-await m.reply_text(text=text, reply_markup=InlineKeyboardMarkup(buttons))
+    await m.reply_text(text=text, reply_markup=InlineKeyboardMarkup(buttons))
 
 @Client.on_callback_query(filters.regex('^try_again'))
 async def try_again(c, m):
