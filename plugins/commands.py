@@ -197,89 +197,82 @@ async def close_button(c, m):
     await m.message.delete()
 
 
-@Client.on_message(filters.command('help'))
+# Help command
+@app.on_message(filters.command("help"))
 async def help_command(c, m):
     text = """
-    🆘 <b>Help Guide</b>
+    🆘 *Help Guide*
     
-    🤔 <b>How to Use:</b>
+    🤔 *How to Use:*
     - Send any text, and I'll transform it into cool fonts.
     - Click on a style button to apply the font.
     - Use the "📋 Copy Text" button to copy the styled text.
     
-    🔗 <b>Useful Commands:</b>
+    🔗 *Useful Commands:*
     /start – Restart the bot
     /help – Show this help message
     /about – Learn more about the bot
     """
-
     buttons = [
         [InlineKeyboardButton("ℹ️ About", callback_data="about_page")],
         [InlineKeyboardButton("❌ Close", callback_data="close")]
     ]
+    await m.reply_text(text, reply_markup=InlineKeyboardMarkup(buttons))
 
-    await m.reply_text(text, reply_markup=InlineKeyboardMarkup(buttons), parse_mode="html")
-
-
-@Client.on_message(filters.command('about'))
+# About command
+@app.on_message(filters.command("about"))
 async def about_command(c, m):
     text = """
-    ℹ️ <b>About This Bot</b>
+    ℹ️ *About This Bot*
     
-    ✨ <b>Stylish Font Bot</b> converts your text into stylish fonts instantly.
-    🚀 Created with ❤️ by <b>@{owner_username}</b>
+    ✨ *Stylish Font Bot* converts your text into stylish fonts instantly.
+    🚀 Created with ❤️ by *@{owner_username}*
     🔠 Supports multiple font styles.
-    📌 Join our channel for updates: <a href="https://t.me/{AUTH_CHANNEL_USERNAME}">Click Here</a>
+    📌 Join our channel for updates: [Click Here](https://t.me/{AUTH_CHANNEL_USERNAME})
     """
-
     buttons = [
         [InlineKeyboardButton("🔙 Back to Help", callback_data="help_page")],
         [InlineKeyboardButton("❌ Close", callback_data="close")]
     ]
+    await m.reply_text(text, reply_markup=InlineKeyboardMarkup(buttons))
 
-    await m.reply_text(text, reply_markup=InlineKeyboardMarkup(buttons), parse_mode="html")
-
-
-@Client.on_callback_query(filters.regex('^help_page'))
+# Help callback
+@app.on_callback_query(filters.regex("^help_page"))
 async def help_callback(c, m):
     await m.answer()
     text = """
-    🆘 <b>Help Guide</b>
+    🆘 *Help Guide*
     
-    🤔 <b>How to Use:</b>
+    🤔 *How to Use:*
     - Send any text, and I'll transform it into cool fonts.
     - Click on a style button to apply the font.
     - Use the "📋 Copy Text" button to copy the styled text.
     
-    🔗 <b>Useful Commands:</b>
+    🔗 *Useful Commands:*
     /start – Restart the bot
     /help – Show this help message
     /about – Learn more about the bot
     """
-
     buttons = [
         [InlineKeyboardButton("ℹ️ About", callback_data="about_page")],
         [InlineKeyboardButton("❌ Close", callback_data="close")]
     ]
+    await m.message.edit(text, reply_markup=InlineKeyboardMarkup(buttons))
 
-    await m.message.edit(text, reply_markup=InlineKeyboardMarkup(buttons), parse_mode="html")
-
-
-@Client.on_callback_query(filters.regex('^about_page'))
+# About callback
+@app.on_callback_query(filters.regex("^about_page"))
 async def about_callback(c, m):
     await m.answer()
     text = """
-    ℹ️ <b>About This Bot</b>
+    ℹ️ *About This Bot*
     
-    ✨ <b>Stylish Font Bot</b> converts your text into stylish fonts instantly.
-    🚀 Created with ❤️ by <b>@{owner_username}</b>
+    ✨ *Stylish Font Bot* converts your text into stylish fonts instantly.
+    🚀 Created with ❤️ by *@{owner_username}*
     🔠 Supports multiple font styles.
-    📌 Join our channel for updates: <a href="https://t.me/{AUTH_CHANNEL_USERNAME}">Click Here</a>
+    📌 Join our channel for updates: [Click Here](https://t.me/{AUTH_CHANNEL_USERNAME})
     """
-
     buttons = [
         [InlineKeyboardButton("🔙 Back to Help", callback_data="help_page")],
         [InlineKeyboardButton("❌ Close", callback_data="close")]
     ]
-
-    await m.message.edit(text, reply_markup=InlineKeyboardMarkup(buttons), parse_mode="html")
+    await m.message.edit(text, reply_markup=InlineKeyboardMarkup(buttons))
