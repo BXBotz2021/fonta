@@ -7,4 +7,4 @@ class Config(object):
     OWNER_ID = int(os.environ.get("OWNER_ID", "1890385137"))
     
     # Add your AUTH_CHANNEL here
-    AUTH_CHANNEL = os.environ.get("AUTH_CHANNEL", "-1002437864651")  # Replace with your channel ID or username
+    AUTH_CHANNEL = os.environ.get("AUTH_CHANNEL", "-1002693207322")  # Replace with your channel ID or username
