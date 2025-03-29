@@ -170,16 +170,13 @@ async def style(c, m):
 
         # "Copy Text" and "Back" buttons
         buttons = [[
-        InlineKeyboardButton("📋 𝗖𝗢𝗣𝗬 𝗧𝗘𝗫𝗧", callback_data=f"copy_text+{new_text}"),
         InlineKeyboardButton("🔙 𝗖𝗛𝗢𝗢𝗦𝗘 𝗔𝗡𝗢𝗧𝗛𝗘𝗥 𝗙𝗢𝗡𝗧", callback_data="back_to_fonts")]]
         try:
             await m.message.edit_text(new_text, reply_markup=InlineKeyboardMarkup(buttons))
         except:
             pass
 
-@Client.on_callback_query(filters.regex('^copy_text'))
-async def copy_text(c, m):
-    await m.answer("✅ Text copied to clipboard!\n(Just long-press the text to copy it.)", show_alert=True)
+
 
 @Client.on_callback_query(filters.regex('^back_to_fonts'))
 async def back_to_fonts(c, m):
