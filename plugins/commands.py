@@ -198,7 +198,7 @@ async def close_button(c, m):
 
 
 # Help command
-@app.on_message(filters.command("help"))
+@Client.on_message(filters.command("help"))
 async def help_command(c, m):
     text = """
     🆘 *Help Guide*
@@ -220,7 +220,7 @@ async def help_command(c, m):
     await m.reply_text(text, reply_markup=InlineKeyboardMarkup(buttons))
 
 # About command
-@app.on_message(filters.command("about"))
+@Client.on_message(filters.command("about"))
 async def about_command(c, m):
     text = """
     ℹ️ *About This Bot*
@@ -237,7 +237,7 @@ async def about_command(c, m):
     await m.reply_text(text, reply_markup=InlineKeyboardMarkup(buttons))
 
 # Help callback
-@app.on_callback_query(filters.regex("^help_page"))
+@Client.on_callback_query(filters.regex("^help_page"))
 async def help_callback(c, m):
     await m.answer()
     text = """
@@ -260,7 +260,7 @@ async def help_callback(c, m):
     await m.message.edit(text, reply_markup=InlineKeyboardMarkup(buttons))
 
 # About callback
-@app.on_callback_query(filters.regex("^about_page"))
+@Client.on_callback_query(filters.regex("^about_page"))
 async def about_callback(c, m):
     await m.answer()
     text = """
