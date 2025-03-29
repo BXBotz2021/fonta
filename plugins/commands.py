@@ -223,9 +223,9 @@ async def about_command(c, m):
     text = """
     ℹ️ About This Bot
     ✨ Stylish Font Bot converts your text into stylish fonts instantly.
-    🚀 Created with ❤️ by @{owner_username}
+    🚀 Created with ❤️ by @Bot_Resurge
     🔠 Supports multiple font styles.
-    📌 Join our channel for updates: https://t.me/{AUTH_CHANNEL_USERNAME}
+    📌 Join our channel for updates: https://t.me/Bot_Resurge
     """
     buttons = [
         [InlineKeyboardButton("🔙 Back to Help", callback_data="help_page")],
@@ -261,9 +261,9 @@ async def about_callback(c, m):
     text = """
     ℹ️ About This Bot
     ✨ Stylish Font Bot converts your text into stylish fonts instantly.
-    🚀 Created with ❤️ by @{owner_username}
+    🚀 Created with ❤️ by @Bot_Resurge
     🔠 Supports multiple font styles.
-    📌 Join our channel for updates: https://t.me/{AUTH_CHANNEL_USERNAME}
+    📌 Join our channel for updates: https://t.me/Bot_Resurge
     """
     buttons = [
         [InlineKeyboardButton("🔙 Back to Help", callback_data="help_page")],
