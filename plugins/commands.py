@@ -42,8 +42,16 @@ async def start(c, m):
     buttons = [[
         InlineKeyboardButton('🔰 𝗖𝗛𝗔𝗡𝗡𝗘𝗟', url=f"https://t.me/{AUTH_CHANNEL_USERNAME}"),
         InlineKeyboardButton('🎛️ 𝗖𝗥𝗘𝗔𝗧𝗢𝗥', url=f"https://t.me/{owner_username}")
+    ],
+    [
+        InlineKeyboardButton('ℹ️ 𝗛𝗘𝗟𝗣', callback_data="help_page"),
+        InlineKeyboardButton('📜 𝗔𝗕𝗢𝗨𝗧', callback_data="about_page")
+    ],
+    [
+        InlineKeyboardButton('❌ 𝗖𝗟𝗢𝗦𝗘', callback_data="close")
     ]]
-    await m.reply_text(text=text, reply_markup=InlineKeyboardMarkup(buttons))
+
+await m.reply_text(text=text, reply_markup=InlineKeyboardMarkup(buttons))
 
 @Client.on_callback_query(filters.regex('^try_again'))
 async def try_again(c, m):
@@ -188,3 +196,78 @@ async def back_to_fonts(c, m):
 @Client.on_callback_query(filters.regex('^close'))
 async def close_button(c, m):
     await m.message.delete()
+
+
+@Client.on_message(filters.command('help'))
+async def help_command(c, m):
+    text = """🆘 <b>Help Guide</b>\n\n
+🤔 <b>How to Use:</b>\n
+- Send any text, and I'll transform it into cool fonts.\n
+- Click on a style button to apply the font.\n
+- Use the "📋 Copy Text" button to copy the styled text.\n\n
+🔗 <b>Useful Commands:</b>\n
+/start – Restart the bot\n
+/help – Show this help message\n
+/about – Learn more about the bot\n"""
+
+    buttons = [
+        [InlineKeyboardButton("ℹ️ About", callback_data="about_page")],
+        [InlineKeyboardButton("❌ Close", callback_data="close")]
+    ]
+
+    await m.reply_text(text, reply_markup=InlineKeyboardMarkup(buttons), parse_mode="html")
+
+
+@Client.on_message(filters.command('about'))
+async def about_command(c, m):
+    text = """ℹ️ <b>About This Bot</b>\n\n
+✨ <b>Stylish Font Bot</b> converts your text into stylish fonts instantly.\n
+🚀 Created with ❤️ by <b>@{owner_username}</b>\n
+🔠 Supports multiple font styles.\n
+📌 Join our channel for updates: <a href="https://t.me/{AUTH_CHANNEL_USERNAME}">Click Here</a>\n"""
+
+    buttons = [
+        [InlineKeyboardButton("🔙 Back to Help", callback_data="help_page")],
+        [InlineKeyboardButton("❌ Close", callback_data="close")]
+    ]
+
+    await m.reply_text(text, reply_markup=InlineKeyboardMarkup(buttons), parse_mode="html")
+
+
+@Client.on_callback_query(filters.regex('^help_page'))
+async def help_callback(c, m):
+    await m.answer()
+    text = """🆘 <b>Help Guide</b>\n\n
+🤔 <b>How to Use:</b>\n
+- Send any text, and I'll transform it into cool fonts.\n
+- Click on a style button to apply the font.\n
+- Use the "📋 Copy Text" button to copy the styled text.\n\n
+🔗 <b>Useful Commands:</b>\n
+/start – Restart the bot\n
+/help – Show this help message\n
+/about – Learn more about the bot\n"""
+
+    buttons = [
+        [InlineKeyboardButton("ℹ️ About", callback_data="about_page")],
+        [InlineKeyboardButton("❌ Close", callback_data="close")]
+    ]
+
+    await m.message.edit(text, reply_markup=InlineKeyboardMarkup(buttons), parse_mode="html")
+
+
+@Client.on_callback_query(filters.regex('^about_page'))
+async def about_callback(c, m):
+    await m.answer()
+    text = """ℹ️ <b>About This Bot</b>\n\n
+✨ <b>Stylish Font Bot</b> converts your text into stylish fonts instantly.\n
+🚀 Created with ❤️ by <b>@{owner_username}</b>\n
+🔠 Supports multiple font styles.\n
+📌 Join our channel for updates: <a href="https://t.me/{AUTH_CHANNEL_USERNAME}">Click Here</a>\n"""
+
+    buttons = [
+        [InlineKeyboardButton("🔙 Back to Help", callback_data="help_page")],
+        [InlineKeyboardButton("❌ Close", callback_data="close")]
+    ]
+
+    await m.message.edit(text, reply_markup=InlineKeyboardMarkup(buttons), parse_mode="html")
+
