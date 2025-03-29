@@ -217,7 +217,8 @@ async def help_command(c, m):
         [InlineKeyboardButton("ℹ️ About", callback_data="about_page")],
         [InlineKeyboardButton("❌ Close", callback_data="close")]
     ]
-    await m.reply_text(text, reply_markup=InlineKeyboardMarkup(buttons))
+    await m.reply_text(text, reply_markup=InlineKeyboardMarkup(buttons), parse_mode="markdown")
+
 
 # About command
 @Client.on_message(filters.command("about"))
@@ -234,7 +235,8 @@ async def about_command(c, m):
         [InlineKeyboardButton("🔙 Back to Help", callback_data="help_page")],
         [InlineKeyboardButton("❌ Close", callback_data="close")]
     ]
-    await m.reply_text(text, reply_markup=InlineKeyboardMarkup(buttons))
+    await m.reply_text(text, reply_markup=InlineKeyboardMarkup(buttons), parse_mode="markdown")
+
 
 # Help callback
 @Client.on_callback_query(filters.regex("^help_page"))
@@ -257,7 +259,7 @@ async def help_callback(c, m):
         [InlineKeyboardButton("ℹ️ About", callback_data="about_page")],
         [InlineKeyboardButton("❌ Close", callback_data="close")]
     ]
-    await m.message.edit(text, reply_markup=InlineKeyboardMarkup(buttons))
+    await m.message.edit(text, reply_markup=InlineKeyboardMarkup(buttons), parse_mode="markdown")
 
 # About callback
 @Client.on_callback_query(filters.regex("^about_page"))
@@ -275,4 +277,4 @@ async def about_callback(c, m):
         [InlineKeyboardButton("🔙 Back to Help", callback_data="help_page")],
         [InlineKeyboardButton("❌ Close", callback_data="close")]
     ]
-    await m.message.edit(text, reply_markup=InlineKeyboardMarkup(buttons))
+    await m.message.edit(text, reply_markup=InlineKeyboardMarkup(buttons), parse_mode="markdown")
