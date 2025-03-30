@@ -42,7 +42,7 @@ def check_for_updates():
         except Exception as e:
             logger.error(f"Error while checking for updates: {e}")
 
-        time.sleep(60)  # Check for updates every 1 minute
+        time.sleep(20)  # Check for updates every 1 minute
 
 if __name__ == "__main__":
     plugins = dict(root="plugins")
