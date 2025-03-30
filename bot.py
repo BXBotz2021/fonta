@@ -4,6 +4,7 @@ import os
 import time
 import subprocess
 import threading
+import sys  # <-- Import sys module
 from config import Config
 from pyrogram import Client
 
@@ -22,11 +23,11 @@ def check_for_updates():
             logger.info("Checking for updates...")
 
             # Run `git fetch` to check for updates
-            fetch_output = subprocess.run(["git", "fetch"], capture_output=True, text=True)
-            
+            subprocess.run(["git", "fetch"], capture_output=True, text=True)
+
             # Check if there are any new commits
             status_output = subprocess.run(["git", "status", "-uno"], capture_output=True, text=True)
-            
+
             if "Your branch is behind" in status_output.stdout:
                 logger.info("New update found! Pulling changes...")
                 subprocess.run(["git", "pull"], check=True)
