@@ -63,6 +63,21 @@ async def try_again(c, m):
 
 @Client.on_message(filters.private & filters.incoming & filters.text)
 async def style_buttons(c, m, cb=False):
+    owner_id = int(Config.OWNER_ID)
+    if m.from_user.id != owner_id and not await is_subscribed(c, m.from_user.id):
+        buttons = [
+            [InlineKeyboardButton("Join Channel", url=f"https://t.me/{AUTH_CHANNEL_USERNAME}")],
+            [InlineKeyboardButton("Try Again", callback_data="try_again")]
+        ]
+        await m.reply_text(
+            text=f"❌ You must join our channel to use this bot:\n\n👉 [Join Channel](https://t.me/{AUTH_CHANNEL_USERNAME})",
+            reply_markup=InlineKeyboardMarkup(buttons),
+            disable_web_page_preview=True
+        )
+        return
+    
+    owner = await c.get_users(owner_id)
+    owner_username = owner.username if owner.username else 'MUFAZTG_NEW'
     buttons = [[
         InlineKeyboardButton('𝚃𝚢𝚙𝚎𝚠𝚛𝚒𝚝𝚎𝚛', callback_data='style+typewriter'),
         InlineKeyboardButton('𝕆𝕦𝕥𝕝𝕚𝕟𝕖', callback_data='style+outline'),
