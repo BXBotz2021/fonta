@@ -38,7 +38,7 @@ async def start(c, m):
     
     owner = await c.get_users(owner_id)
     owner_username = owner.username if owner.username else 'MUFAZTG_NEW'
-    text = f"""👋 <b>Hey there, {m.from_user.mention(style='html')}!</b>\n\n✨ Welcome to the <b>Stylish Font Bot</b> – your personal text styler!\n\n🔠 Send me any text, and I'll turn it into <b>cool & unique fonts</b> instantly.\n\n🎨 Try it out now and give your words a stylish touch!\n\n🚀 Made with ❤️ by <b>@{owner_username}</b>"""
+    text = f"""👋 <b>Hey there, {m.from_user.mention(style='html')}!</b>\n\n✨ Welcome to <b>Stylish Font Bot</b> – your personal text styler!\n\n🔠 Send me any text, and I'll turn it into <b>cool & unique fonts</b> instantly.\n\n🎨 Try it out now and give your words a stylish touch!\n\n🚀 Made with ❤️ by <b>@{owner_username}</b>"""
     buttons = [[
         InlineKeyboardButton('🔰 𝗖𝗛𝗔𝗡𝗡𝗘𝗟', url=f"https://t.me/{AUTH_CHANNEL_USERNAME}"),
         InlineKeyboardButton('🎛️ 𝗖𝗥𝗘𝗔𝗧𝗢𝗥', url=f"https://t.me/{owner_username}")
